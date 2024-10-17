@@ -1,11 +1,11 @@
--- Creates a table users with below attributes
--- id, integer, never null, auto increment and primary key
--- email, string (255 characters), never null and unique
--- name, string (255 characters)
--- If table exists, script will not fail, can be executed on any database
+-- Creates a 'users' table with the following specifications:
+-- id: integer, auto-incremented, primary key, and cannot be null
+-- email: string (maximum 255 characters), must be unique and cannot be null
+-- name: string (maximum 255 characters)
+-- The script ensures it does not fail if the table already exists and can be run on any database
 
 CREATE TABLE IF NOT EXISTS users (
-       id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-       email VARCHAR(255) NOT NULL UNIQUE,
-       name VARCHAR(255)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255)
 );
