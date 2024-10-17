@@ -1,14 +1,13 @@
--- Initial
-DROP TABLE IF EXISTS users;
+-- Trigger to reset the 'valid_email' attribute when the email is changed
+-- Trigger runs before any update on the 'users' table
 
-CREATE TABLE IF NOT EXISTS users (
-    id int not null AUTO_INCREMENT,
-    email varchar(255) not null,
-    name varchar(255),
-    valid_email boolean not null default 0,
-    PRIMARY KEY (id)
-);
-
-INSERT INTO users (email, name) VALUES ("bob@dylan.com", "Bob");
-INSERT INTO users (email, name, valid_email) VALUES ("sylvie@dylan.com", "Sylvie", 1);
-INSERT INTO users (email, name, valid_email) VALUES ("jeanne@dylan.com", "Jeanne", 1);
+DELIMITER $$;
+CREATE TRIGGER resets_valid_email 
+BEFORE UPDATE ON users
+FOR EACH ROW
+BEGIN
+    IF NEW.email != OLD.email THEN
+        SET NEW.valid_email = 0;
+    END IF;
+END$$
+DELIMITER ;
